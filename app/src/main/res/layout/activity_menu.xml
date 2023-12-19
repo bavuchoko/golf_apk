@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+
+    android:background="@color/white"
+
+    android:theme="@style/ThemeOverlay.AppCompat.Dark">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:paddingLeft="15dp"
+        android:paddingTop="15dp"
+        android:paddingRight="15dp"
+        android:paddingBottom="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:ignore="MissingConstraints">
+
+    <ImageButton
+        android:id="@+id/btn_close_menu"
+        android:layout_height="35dp"
+        android:layout_width="35dp"
+        android:src="@drawable/baseline_close_24"
+        android:background="@color/white"
+        />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:id="@+id/before_login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                android:orientation="vertical">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:layout_marginBottom="15dp">
+
+                    <ImageView
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10dp"
+                        android:contentDescription="@string/nav_header_desc"
+                        app:srcCompat="@drawable/user" />
+
+
+                    <TextView
+                        android:id="@+id/login_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="20dp"
+                        android:text="로그인 하세요"
+                        android:textColor="#000000"
+                        android:textSize="24dp"
+                        android:visibility="visible"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:id="@+id/right_arrow"
+                        android:layout_width="15dp"
+                        android:layout_height="18dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_toEndOf="@+id/login_btn"
+                        android:src="@drawable/baseline_keyboard_arrow_right_24" />
+
+                    <TextView
+                        android:id="@+id/textView1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="11dp"
+                        android:text="매치생성 및 관리"
+                        android:layout_below="@id/login_btn"
+                        android:textColor="#000000" />
+                    <TextView
+                        android:id="@+id/textView2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="11dp"
+                        android:text="경기 기록을 조회할 수 있습니다."
+                        android:layout_below="@id/textView1"
+                        android:textColor="#000000" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="55dp"
+                    android:layout_height="15dp"
+                    android:layout_gravity="center">
+
+                    <TextView
+                        android:id="@+id/join"
+                        android:layout_width="wrap_content"
+                        android:layout_height="15dp"
+                        android:textSize="11dp"
+                        android:textColor="#000000"
+                        android:text="회원가입" />
+
+                    <ImageView
+                        android:layout_width="13dp"
+                        android:layout_height="16dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="1dp"
+                        android:layout_alignParentRight="true"
+                        android:src="@drawable/baseline_keyboard_arrow_right_24" />
+
+                </RelativeLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/after_login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="invisible"
+                >
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:layout_marginBottom="15dp">
+
+                    <ImageView
+                        android:id="@+id/user_profile"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10dp"
+                        android:contentDescription="@string/nav_header_desc"
+                        app:srcCompat="@drawable/user" />
+
+                    <TextView
+                        android:id="@+id/user_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="20dp"
+                        android:text="사용자"
+                        android:textColor="#000000"
+                        android:textSize="24dp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/user_name">
+                        <ImageButton
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_marginRight="10dp"
+                            android:background="@color/white"
+                            android:src="@drawable/baseline_male_24"></ImageButton>
+
+                        <TextView
+                            android:id="@+id/user_age"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="13dp"
+                            android:text="만 00세"
+                            android:layout_below="@id/user_name"
+                            android:textColor="#000000" />
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="55dp"
+                    android:layout_height="15dp"
+                    android:layout_gravity="center">
+
+                    <TextView
+                        android:id="@+id/logout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="15dp"
+                        android:textSize="11dp"
+                        android:textColor="#000000"
+                        android:text="로그아웃" />
+
+                    <ImageView
+                        android:layout_width="13dp"
+                        android:layout_height="16dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="1dp"
+                        android:layout_alignParentRight="true"
+                        android:src="@drawable/baseline_keyboard_arrow_right_24" />
+
+                </RelativeLayout>
+            </LinearLayout>
+        </RelativeLayout>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:elevation="0dp"
+        android:theme="@style/Theme.Golf_apk.NoActionBar">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/white"
+            android:fadingEdge="vertical|none" >
+
+            <TextView
+                android:id="@+id/btn_practice"
+                android:layout_width="50dp"
+                android:layout_height="25dp"
+                android:layout_marginEnd="15dp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_gravity="end"
+                android:textSize="13dp"
+                android:text="연습"/>
+
+            <TextView
+                android:id="@+id/btn_match"
+                android:layout_width="50dp"
+                android:layout_height="25dp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_marginEnd="10dp"
+                android:layout_gravity="end"
+                android:textSize="13dp"
+                android:text="일반"/>
+
+
+            <TextView
+                android:id="@+id/btn_rank"
+                android:layout_width="50dp"
+                android:layout_height="25dp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_marginEnd="10dp"
+                android:layout_gravity="end"
+                android:textSize="13dp"
+                android:text="랭킹"/>
+
+            <TextView
+                android:id="@+id/btn_field"
+                android:layout_width="50dp"
+                android:layout_height="25dp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_marginEnd="10dp"
+                android:layout_gravity="end"
+                android:textSize="13dp"
+                android:text="필드"/>
+
+            <ImageButton
+                android:id="@+id/btn_menu"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/baseline_clear_all_24"
+                android:background="@color/white"/>
+
+        </androidx.appcompat.widget.Toolbar>
+
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
