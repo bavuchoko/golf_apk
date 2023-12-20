@@ -4,11 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.View;
 import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -47,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
     private void openMenuActivity() {
         Intent intent = new Intent(MainActivity.this, MenuActivity.class);
         startActivity(intent);
-        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+        overridePendingTransition(R.anim.left_to_right, R.anim.not_move);
     }
 
     public void onCloseButtonClick(View view) {

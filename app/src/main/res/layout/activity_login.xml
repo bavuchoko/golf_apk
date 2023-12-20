@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="15dp"
+    android:paddingTop="15dp"
+    android:paddingRight="15dp"
+    android:paddingBottom="10dp"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <ImageButton
+        android:id="@+id/btn_close_login"
+        android:layout_height="35dp"
+        android:layout_width="35dp"
+        android:src="@drawable/baseline_close_24"
+        android:background="@color/white"
+        />
+
+    <TextView
+        android:id="@+id/login_alert"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="아이디를 입력하세요"
+        android:gravity="center"
+        android:layout_marginVertical="80dp"
+        android:layout_gravity="center"
+        android:textStyle="bold"
+        android:textColor="#AE2B2B"
+        />
+
+    <TextView
+        android:id="@+id/text_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="로그인"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_marginBottom="20dp"/>
+
+
+
+    <EditText
+        android:id="@+id/user_id"
+        android:layout_width="@dimen/common_input_width"
+        android:layout_height="@dimen/common_input_height"
+        android:inputType="phone"
+        android:layout_gravity="center"
+        android:hint="휴대폰 번호"
+        android:layout_marginBottom="10dp"
+        />
+
+    <EditText
+        android:id="@+id/passwd"
+        android:layout_width="@dimen/common_input_width"
+        android:layout_height="@dimen/common_input_height"
+        android:inputType="textPassword"
+        android:layout_gravity="center"
+        android:hint="비밀번호"
+        android:layout_marginBottom="30dp"
+        />
+
+    <Button
+        android:id="@+id/btn_login"
+        android:layout_width="@dimen/common_input_width"
+        android:layout_height="@dimen/common_input_height"
+        android:layout_gravity="center"
+        android:backgroundTint="#7E7E7E"
+        android:text="로그인"
+        />
+
+    <TextView
+        android:layout_width="@dimen/common_input_width"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:textSize="12sp"
+        android:text="세종 파크 골프"
+        />
+
+    <TextView
+        android:layout_width="@dimen/common_input_width"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textSize="12sp"
+        android:text="contact: bavuchoko@naver.com"
+        />
+
+</LinearLayout>
