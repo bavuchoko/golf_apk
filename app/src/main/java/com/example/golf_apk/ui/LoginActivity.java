@@ -149,6 +149,7 @@ public class LoginActivity extends AppCompatActivity {
 
                                 LoginActivity.this.getSupportFragmentManager().popBackStack();
                             }else{
+                                CommonMethod.hideLoading();
                                 CommonMethod.logout(LoginActivity.this);
                             }
                         }
