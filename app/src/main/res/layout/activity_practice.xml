@@ -9,28 +9,81 @@
     android:paddingBottom="10dp"
     android:background="@color/white"
     android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="19dp"
+                android:fontFamily="@font/applesdgothicneo_bold"
+                android:layout_marginTop="4dp"
+                android:text="연습경기"/>
+
+            <ImageButton
+                android:id="@+id/btn_close_practice"
+                android:layout_height="35dp"
+                android:layout_width="35dp"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/baseline_close_24"
+                android:background="@color/white"
+                />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginVertical="20dp">
+
+            <TextView
+                android:id="@+id/showDatePicker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+    </LinearLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:textSize="19dp"
-            android:layout_marginTop="4dp"
-            android:text="연습경기"/>
+        <LinearLayout
+            android:id="@+id/list_noContent"
+            android:layout_width="match_parent"
+            android:visibility="invisible"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
 
-        <ImageButton
-            android:id="@+id/btn_close_practice"
-            android:layout_height="35dp"
-            android:layout_width="35dp"
-            android:layout_alignParentRight="true"
-            android:src="@drawable/baseline_close_24"
-            android:background="@color/white"
-            />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/empty"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textSize="18dp"
+                android:textColor="#BA1E1E"
+                android:layout_marginTop="30dp"
+                android:fontFamily="@font/applesdgothicneo_bold"
+                android:text="저런.....데이터가 없습니다"/>
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/list_practice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
     </RelativeLayout>
-
 
 </LinearLayout>

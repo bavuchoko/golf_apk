@@ -20,7 +20,7 @@ import com.example.golf_apk.dto.ExpandableMenuItem;
 import com.example.golf_apk.ui.create.CreateField;
 import com.example.golf_apk.ui.create.CreateMatch;
 import com.example.golf_apk.ui.create.CreatePractice;
-import com.example.golf_apk.ui.menus.ExpandableListAdapter;
+import com.example.golf_apk.dto.adapter.ExpandableListAdapter;
 import com.example.golf_apk.ui.update.UpdatePractice;
 
 import org.threeten.bp.LocalDate;

@@ -22,6 +22,7 @@ public interface ApiService {
             @Query("endDate") String endDate,
             @Query("page") int page,
             @Query("size") int size,
+            @Query("sort") int sort,
             @Header("Authorization") String authorizationHeader);
 
     @GET("api/warmup")
@@ -29,5 +30,6 @@ public interface ApiService {
             @Query("startDate") String startDate,
             @Query("endDate") String endDate,
             @Query("page") int page,
-            @Query("size") int size);
+            @Query("size") int size,
+            @Query("sort") String sort);
 }

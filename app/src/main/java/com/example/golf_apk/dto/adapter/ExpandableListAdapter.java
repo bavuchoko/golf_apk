@@ -1,4 +1,4 @@
-package com.example.golf_apk.ui.menus;
+package com.example.golf_apk.dto.adapter;
 
 
 import android.content.Context;
