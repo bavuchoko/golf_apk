@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
     private void openMatchActivity() {
         Intent intent = new Intent(MainActivity.this, MatchActivity.class);
         startActivity(intent);
+        overridePendingTransition(R.anim.up_to_center, R.anim.not_move);
     }
     private void openMenuActivity() {
         Intent intent = new Intent(MainActivity.this, MenuActivity.class);

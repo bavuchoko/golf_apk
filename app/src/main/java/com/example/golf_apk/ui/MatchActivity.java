@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -17,7 +18,7 @@ public class MatchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_match);
 
-        Button closeButton = findViewById(R.id.btn_close_match);
+        ImageButton closeButton = findViewById(R.id.btn_close_match);
         closeButton.setOnClickListener(closeThisActivityListener);
     }
     private final View.OnClickListener closeThisActivityListener = new View.OnClickListener() {

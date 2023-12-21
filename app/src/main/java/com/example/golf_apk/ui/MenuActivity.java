@@ -134,16 +134,19 @@ public class MenuActivity extends AppCompatActivity {
 
                 switch (childPosition) {
                     case 0:
-                        // 필드 정보 페이지로 이동
+                        // 필드 등록 페이지로 이동
                         intent = new Intent(MenuActivity.this, CreateField.class);
+                        overridePendingTransition(R.anim.up_to_center, R.anim.not_move);
                         break;
                     case 1:
                         // 경기 등록 페이지로 이동
                         intent = new Intent(MenuActivity.this, CreateMatch.class);
+                        overridePendingTransition(R.anim.up_to_center, R.anim.not_move);
                         break;
                     case 2:
                         // 연습경기 등록하기 페이지로 이동
                         intent = new Intent(MenuActivity.this, CreatePractice.class);
+                        overridePendingTransition(R.anim.up_to_center, R.anim.not_move);
                         break;
                 }
                 startActivity(intent);
