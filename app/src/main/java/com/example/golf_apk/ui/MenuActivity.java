@@ -6,6 +6,7 @@ import static com.example.golf_apk.common.CommonMethod.getInfoFromStorage;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ExpandableListView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -15,12 +16,28 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.golf_apk.R;
 import com.example.golf_apk.common.CommonMethod;
 import com.example.golf_apk.common.KeyType;
+import com.example.golf_apk.dto.ExpandableMenuItem;
+import com.example.golf_apk.ui.create.CreateField;
+import com.example.golf_apk.ui.create.CreateMatch;
+import com.example.golf_apk.ui.create.CreatePractice;
+import com.example.golf_apk.ui.menus.ExpandableListAdapter;
+import com.example.golf_apk.ui.update.UpdatePractice;
 
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.Period;
 import org.threeten.bp.format.DateTimeFormatter;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 public class MenuActivity extends AppCompatActivity {
+
+    private ExpandableListView expandableListView;
+    private ExpandableListAdapter expandableListAdapter;
+    private List<String> listDataHeader;
+    private HashMap<String, List<ExpandableMenuItem>> listDataChild;
+
     private String accessToken;
     LinearLayout beforeLogin;
     LinearLayout afterLogin;
@@ -62,6 +79,19 @@ public class MenuActivity extends AppCompatActivity {
             userAge.setText("만 "+age.getYears()+"세");
         }
 
+        // ExpandableListView 초기화
+        expandableListView = findViewById(R.id.expandable_menu_playing);
+
+        // 그룹 데이터 및 하위 항목 데이터 초기화
+        initData();
+
+        // 어댑터 생성 및 설정
+        expandableListAdapter = new ExpandableListAdapter(this, listDataHeader, listDataChild);
+        expandableListView.setAdapter(expandableListAdapter);
+        
+        //확장메뉴의 자식메뉴 클릭 이벤트
+        expandableListView.setOnChildClickListener(expandableChildClickListener);
+
     }
 
     private final View.OnClickListener closeThisActivityListener = new View.OnClickListener() {
@@ -83,6 +113,48 @@ public class MenuActivity extends AppCompatActivity {
     };
 
 
+
+    private final ExpandableListView.OnChildClickListener expandableChildClickListener = new  ExpandableListView.OnChildClickListener() {
+        @Override
+        public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+
+            if (groupPosition == 0) {
+                // 클릭된 아이템에 해당하는 정보 가져오기
+                ExpandableMenuItem clickedItem = expandableListAdapter.getMenuDataList().get(listDataHeader.get(groupPosition)).get(childPosition);
+
+                // view 페이지로 이동
+                Intent intent = new Intent(MenuActivity.this, UpdatePractice.class);
+                intent.putExtra("id", clickedItem.getId());
+                startActivity(intent);
+                
+                
+            } else if (groupPosition == 1) {
+                //새로운 등록 페이지
+                Intent intent = null;
+
+                switch (childPosition) {
+                    case 0:
+                        // 필드 정보 페이지로 이동
+                        intent = new Intent(MenuActivity.this, CreateField.class);
+                        break;
+                    case 1:
+                        // 경기 등록 페이지로 이동
+                        intent = new Intent(MenuActivity.this, CreateMatch.class);
+                        break;
+                    case 2:
+                        // 연습경기 등록하기 페이지로 이동
+                        intent = new Intent(MenuActivity.this, CreatePractice.class);
+                        break;
+                }
+                startActivity(intent);
+            }
+            return true;
+        }
+    };
+
+
+
+
     private final View.OnClickListener gotToLoginActivityListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
@@ -92,19 +164,41 @@ public class MenuActivity extends AppCompatActivity {
 
     private void closeMenuActivity() {
         finish();
-        overridePendingTransition(R.anim.not_move, R.anim.right_to_left);
+        overridePendingTransition(R.anim.not_move, R.anim.center_to_left);
     }
 
     private void openLoginActivity() {
         Intent intent = new Intent(MenuActivity.this, LoginActivity.class);
         startActivity(intent);
         finish();
-        overridePendingTransition(R.anim.up_to_down, R.anim.not_move);
+        overridePendingTransition(R.anim.up_to_center, R.anim.not_move);
     }
 
 
     private boolean isLoggedIn() {
         accessToken = getAccessToken(this);
         return  accessToken != null;
+    }
+
+    private void initData() {
+        listDataHeader = new ArrayList<>();
+        listDataChild = new HashMap<>();
+        List<List<ExpandableMenuItem>> childList = new ArrayList<>();
+
+        // 그룹 추가
+        listDataHeader.add("진행중인 경기보기");
+        List<ExpandableMenuItem> nowPlaying = new ArrayList<>();
+        childList.add(nowPlaying);
+
+        listDataHeader.add("새로운 정보 등록");
+        List<ExpandableMenuItem> createMenu = new ArrayList<>();
+        createMenu.add(new ExpandableMenuItem(1,"필드 정보"));
+        createMenu.add(new ExpandableMenuItem(1,"경기 등록"));
+        createMenu.add(new ExpandableMenuItem(1,"연습경기 등록하기"));
+        childList.add(createMenu);
+
+        for(int i =0; i< listDataHeader.size(); i++){
+            listDataChild.put(listDataHeader.get(i), childList.get(i));
+        }
     }
 }

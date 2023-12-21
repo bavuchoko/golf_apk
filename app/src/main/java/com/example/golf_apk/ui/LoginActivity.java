@@ -184,13 +184,13 @@ public class LoginActivity extends AppCompatActivity {
     private final View.OnClickListener closeThisActivityListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            closeMenuActivity();
+            closethisActivity();
         }
     };
 
-    private void closeMenuActivity() {
+    private void closethisActivity() {
         finish();
-        overridePendingTransition(R.anim.not_move, R.anim.donw_to_up);
+        overridePendingTransition(R.anim.not_move, R.anim.center_to_up);
     }
 
 
@@ -198,7 +198,7 @@ public class LoginActivity extends AppCompatActivity {
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(intent);
         finish();
-        overridePendingTransition(R.anim.donw_to_up, R.anim.not_move);
+        overridePendingTransition(R.anim.center_to_up, R.anim.not_move);
     }
 
 }
