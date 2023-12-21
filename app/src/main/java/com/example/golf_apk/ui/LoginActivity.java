@@ -1,5 +1,6 @@
 package com.example.golf_apk.ui;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.golf_apk.MainActivity;
 import com.example.golf_apk.R;
 import com.example.golf_apk.api.ApiService;
 import com.example.golf_apk.api.RetrofitClient;
@@ -124,7 +126,7 @@ public class LoginActivity extends AppCompatActivity {
                         public void onResponse(Call<AccountResponse> call, Response<AccountResponse> response) {
 
                             CommonMethod.hideLoading();
-
+                            CommonMethod.clearAll(LoginActivity.this);
                             if (response.isSuccessful()) {
                                 Headers headers = response.headers();
                                 List<String> cookies = headers.values("Set-Cookie");
@@ -140,17 +142,15 @@ public class LoginActivity extends AppCompatActivity {
                                         }
                                     }
                                 }
-
                                 AccountResponse authenticationResponse = response.body();
                                 CommonMethod.saveAccessToken(LoginActivity.this,  authenticationResponse.getAccessToken());
                                 CommonMethod.saveInfotoStorage(LoginActivity.this, KeyType.NAME.getValue(), authenticationResponse.getName());
                                 CommonMethod.saveInfotoStorage(LoginActivity.this, KeyType.BIRTH.getValue(), authenticationResponse.getBirth());
                                 CommonMethod.saveInfotoStorage(LoginActivity.this, KeyType.JOIN_DATE.getValue(), authenticationResponse.getJoinDate());
-
-                                LoginActivity.this.getSupportFragmentManager().popBackStack();
+                                openMainActivity();
                             }else{
                                 CommonMethod.hideLoading();
-                                CommonMethod.logout(LoginActivity.this);
+                                CommonMethod.clearAll(LoginActivity.this);
                             }
                         }
 
@@ -158,7 +158,7 @@ public class LoginActivity extends AppCompatActivity {
                         @Override
                         public void onFailure(Call<AccountResponse> call, Throwable t) {
                             CommonMethod.hideLoading();
-                            CommonMethod.logout(LoginActivity.this);
+                            CommonMethod.clearAll(LoginActivity.this);
                             CommonMethod.showAlert(LoginActivity.this,"로그인에 실패하였습니다.");
                         }
                     });
@@ -192,4 +192,13 @@ public class LoginActivity extends AppCompatActivity {
         finish();
         overridePendingTransition(R.anim.not_move, R.anim.donw_to_up);
     }
+
+
+    private void openMainActivity() {
+        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        startActivity(intent);
+        finish();
+        overridePendingTransition(R.anim.donw_to_up, R.anim.not_move);
+    }
+
 }

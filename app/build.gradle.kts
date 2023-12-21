@@ -44,4 +44,6 @@ dependencies {
     implementation ("io.jsonwebtoken:jjwt-api:0.11.2")
     implementation ("io.jsonwebtoken:jjwt-impl:0.11.2")
     implementation ("io.jsonwebtoken:jjwt-jackson:0.11.2")
+    implementation ("com.jakewharton.threetenabp:threetenabp:1.2.4")
+
 }

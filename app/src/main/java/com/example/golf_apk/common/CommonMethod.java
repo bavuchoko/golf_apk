@@ -168,7 +168,7 @@ public class CommonMethod {
         editor.apply();
     }
 
-    public static void logout(Context context) {
+    public static void clearAll(Context context) {
         SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_ALIAS, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.clear();
