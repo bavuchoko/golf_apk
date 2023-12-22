@@ -6,10 +6,8 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.animation.Animation;
-import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -20,17 +18,22 @@ import com.example.golf_apk.R;
 import com.example.golf_apk.api.ApiService;
 import com.example.golf_apk.api.RetrofitClient;
 import com.example.golf_apk.common.CommonMethod;
-import com.example.golf_apk.dto.PagedResponse;
-import com.example.golf_apk.dto.PracticeGame;
+import com.example.golf_apk.common.KeyType;
 import com.example.golf_apk.dto.adapter.PracticeArrayAdapter;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.format.DateTimeFormatter;
+import org.threeten.bp.temporal.ChronoUnit;
 
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.Calendar;
-import java.util.List;
+import java.util.Locale;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -40,10 +43,12 @@ public class PracticeActivity extends AppCompatActivity {
     private Animation slideOut;
     private ListView listView;
     private TextView datePickerStartDate;
+    private TextView datePickerEndDate;
     private String startDate;
+    private String endDate;
     private LinearLayout empty;
-    private ArrayAdapter<PracticeGame> adapter;
-    private List<PracticeGame> practiceGames;
+    private PracticeArrayAdapter adapter;
+    private  JsonArray warmupGameDtoList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,18 +59,23 @@ public class PracticeActivity extends AppCompatActivity {
         closeButton.setOnClickListener(closeThisActivityListener);
         CommonMethod.showLoading(PracticeActivity.this);
 
-        datePickerStartDate = findViewById(R.id.showDatePicker);
+        datePickerStartDate = findViewById(R.id.showStartDatePicker);
+        datePickerEndDate = findViewById(R.id.showEndDatePicker);
         listView = findViewById(R.id.list_practice);
-        practiceGames = new ArrayList<>();
-        adapter = new ArrayAdapter<>(PracticeActivity.this, android.R.layout.simple_list_item_1, practiceGames);
+
+        adapter = new PracticeArrayAdapter(PracticeActivity.this, warmupGameDtoList);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy-MM-dd");
 
         LocalDate currentDate = LocalDate.now();
-        startDate = currentDate.format(formatter);
+        LocalDate threeDaysAgo = currentDate.minus(3, ChronoUnit.DAYS);
+        startDate = threeDaysAgo.format(formatter);
+        endDate = currentDate.format(formatter);
         datePickerStartDate.setText(startDate);
+        datePickerEndDate.setText(endDate);
 
 
         datePickerStartDate.setOnClickListener(openDatePickerStart);
+        datePickerEndDate.setOnClickListener(openDatePickerEnd);
 
         datePickerStartDate.addTextChangedListener(new TextWatcher() {
             @Override
@@ -83,7 +93,22 @@ public class PracticeActivity extends AppCompatActivity {
                 getPractices();
             }
         });
+        datePickerEndDate.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                getPractices();
+            }
+        });
         getPractices();
         listView.setAdapter(adapter);
     }
@@ -104,10 +129,16 @@ public class PracticeActivity extends AppCompatActivity {
     private final View.OnClickListener openDatePickerStart = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            showDatePickerDialog();
+            showDatePickerDialog(KeyType.START_DATE);
         }
     };
-    private void showDatePickerDialog() {
+    private final View.OnClickListener openDatePickerEnd = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            showDatePickerDialog(KeyType.END_DATE);
+        }
+    };
+    private void showDatePickerDialog(KeyType keyType) {
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
@@ -117,9 +148,14 @@ public class PracticeActivity extends AppCompatActivity {
                 PracticeActivity.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int selectedYear, int monthOfYear, int dayOfMonth) {
-                        String selectedDate = selectedYear + "-" + (monthOfYear + 1)  + "-" + dayOfMonth;
-                        startDate =selectedDate.substring(2);
-                        datePickerStartDate.setText(selectedDate.substring(2));
+                        String selectedDate = String.format(Locale.getDefault(), "%04d-%02d-%02d", selectedYear, monthOfYear + 1, dayOfMonth);
+                        if(keyType== KeyType.START_DATE){
+                            startDate =selectedDate.substring(2);
+                            datePickerStartDate.setText(selectedDate.substring(2));
+                        }else{
+                            endDate =selectedDate.substring(2);
+                            datePickerEndDate.setText(selectedDate.substring(2));
+                        }
                     }
                 },
                 year, month, day);
@@ -129,26 +165,53 @@ public class PracticeActivity extends AppCompatActivity {
     private void getPractices() {
         api = RetrofitClient.getRetrofit().create(ApiService.class);
         String start="20"+startDate+"T00:00:00";
-        String end="20"+startDate+"T23:59:59";
+        String end="20"+endDate+"T23:59:59";
         int page =0;
         int size=10;
-        Call<PagedResponse<PracticeGame>> call = api.getPractices(start, end, page, size,"playDate,desc");
-        call.enqueue(new Callback<PagedResponse<PracticeGame>>() {
+        Call<ResponseBody> call;
+        String accessToken = CommonMethod.getAccessToken(PracticeActivity.this);
+        if(accessToken !=null){
+            call = api.getPractices(start, end, page, size,"playDate,desc", "Bearer " + accessToken);
+        }else{
+            call = api.getPractices(start, end, page, size,"playDate,desc");
+        }
+        call.enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<PagedResponse<PracticeGame>> call, Response<PagedResponse<PracticeGame>> response) {
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
-                    practiceGames.clear();
-                    PagedResponse<PracticeGame> pagedResponse = response.body();
+                    ResponseBody responseBody = response.body();
                     empty = findViewById(R.id.list_noContent);
                     // 리스트에 데이터를 추가하는 부분을 수정
-                    if(pagedResponse.getEmbedded()!= null) {
-                        practiceGames.addAll(pagedResponse.getEmbedded().getPractices());
-                        empty.setVisibility(View.INVISIBLE);
-                    }else{
-                        empty.setVisibility(View.VISIBLE);
+                    try {
+                        if (responseBody != null) {
+                            String jsonString= responseBody.string();
+
+                            JsonElement jsonElement= JsonParser.parseString(jsonString);
+
+                            warmupGameDtoList = new JsonArray();
+                            if (jsonElement != null) {
+                                JsonObject embeddedObject = jsonElement.getAsJsonObject().getAsJsonObject("_embedded");
+                                if (embeddedObject != null) {
+                                    JsonElement warmupGameListElement = embeddedObject.get("warmupGameDtoList");
+                                    if (warmupGameListElement != null && warmupGameListElement.isJsonArray()) {
+                                        warmupGameDtoList = warmupGameListElement.getAsJsonArray();
+                                        empty.setVisibility(View.INVISIBLE);
+                                    }
+                                }else{
+                                    empty.setVisibility(View.VISIBLE);
+                                }
+                            }else{
+                                empty.setVisibility(View.VISIBLE);
+                            }
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } finally {
+                        responseBody.close();
                     }
-                    adapter = new PracticeArrayAdapter(PracticeActivity.this, practiceGames);
-                    listView.setAdapter(adapter);
+                    if (warmupGameDtoList != null) {
+                        adapter.updateData(warmupGameDtoList);
+                    }
                     CommonMethod.hideLoading();
                 } else {
                     // 서버 응답이 실패한 경우 처리
@@ -156,11 +219,10 @@ public class PracticeActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<PagedResponse<PracticeGame>> call, Throwable t) {
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
                 // 네트워크 오류 등에 대한 처리
                 t.printStackTrace();
             }
         });
     }
-
 }

@@ -5,7 +5,9 @@ public enum KeyType {
     REFRESH_TOKEN("refreshToken"),
     NAME("name"),
     JOIN_DATE("joinDate"),
-    BIRTH("birth");
+    BIRTH("birth"),
+    START_DATE("start_date"),
+    END_DATE("end_date");
 
     private final String value;
 

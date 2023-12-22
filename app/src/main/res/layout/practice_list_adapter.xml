@@ -10,7 +10,8 @@
         android:background="@color/white"
         android:id="@+id/practice_linear"
         android:layout_width="match_parent"
-        android:layout_marginTop="10dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
@@ -18,56 +19,68 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/play_date"
-                android:layout_width="40dp"
-                android:layout_height="wrap_content"
-                android:text="12-31"
-                android:layout_marginBottom="15dp"/>
-
-            <View
-                android:layout_width="1dp"
-                android:layout_height="14dp"
-                android:layout_marginTop="3dp"
-                android:layout_marginRight="8dp"
-                android:background="@android:color/black"
-                />
-
-            <TextView
-                android:id="@+id/play_status"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:text="awdawdawd" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
             android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/player_1"
-                android:layout_width="70dp"
-                android:layout_height="wrap_content"
-                android:text="김김김김" />
+            <ImageView
+                android:id="@+id/list_occupy"
+                android:layout_width="50dp"
+                android:layout_height="20dp"
+                android:src="@drawable/baseline_star_border_24"/>
 
-            <TextView
-                android:id="@+id/player_2"
-                android:layout_width="70dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="박박박박" />
-            <TextView
-                android:id="@+id/player_3"
-                android:layout_width="70dp"
-                android:layout_height="wrap_content"
-                android:text="최최최최" />
-            <TextView
-                android:id="@+id/player_4"
-                android:layout_width="70dp"
-                android:layout_height="wrap_content"
-                android:text="이이이이" />
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/play_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/applesdgothicneo_extra_bold"
+                    android:text="03월 21일 화요일 오전"/>
+                <TextView
+                    android:id="@+id/field_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/applesdgothicnneo_regular"
+                    android:text="세종 1구장"/>
+
+                <TextView
+                    android:id="@+id/field_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/applesdgothicnneo_regular"
+                    android:text="세종시 흰누리대로 23"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/play_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/btn_blue_whitestroke"
+                        android:fontFamily="@font/applesdgothicnneo_regular"
+                        android:textSize="13sp"
+                        android:textColor="@color/white"
+                        android:layout_marginTop="5dp"
+                        android:paddingHorizontal="8sp"
+                        android:paddingVertical="5sp"
+                        android:textStyle="bold"
+                        android:text="PLAYING"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
 
         </LinearLayout>
     </LinearLayout>
