@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.golf_apk.ui.MatchActivity;
 import com.example.golf_apk.ui.MenuActivity;
 import com.example.golf_apk.ui.PracticeActivity;
+import com.jakewharton.threetenabp.AndroidThreeTen;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        AndroidThreeTen.init(this);
 
 
         TextView matchButton = findViewById(R.id.btn_match);

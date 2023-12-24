@@ -19,7 +19,7 @@ import com.example.golf_apk.api.ApiService;
 import com.example.golf_apk.api.RetrofitClient;
 import com.example.golf_apk.common.CommonMethod;
 import com.example.golf_apk.common.KeyType;
-import com.example.golf_apk.dto.adapter.PracticeArrayAdapter;
+import com.example.golf_apk.dto.adapter.PracticeAdapter;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -47,7 +47,7 @@ public class PracticeActivity extends AppCompatActivity {
     private String startDate;
     private String endDate;
     private LinearLayout empty;
-    private PracticeArrayAdapter adapter;
+    private PracticeAdapter adapter;
     private  JsonArray warmupGameDtoList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +63,7 @@ public class PracticeActivity extends AppCompatActivity {
         datePickerEndDate = findViewById(R.id.showEndDatePicker);
         listView = findViewById(R.id.list_practice);
 
-        adapter = new PracticeArrayAdapter(PracticeActivity.this, warmupGameDtoList);
+        adapter = new PracticeAdapter(PracticeActivity.this, warmupGameDtoList);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy-MM-dd");
 
         LocalDate currentDate = LocalDate.now();

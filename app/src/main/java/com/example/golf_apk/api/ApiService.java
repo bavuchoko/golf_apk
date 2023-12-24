@@ -4,6 +4,7 @@ import com.example.golf_apk.dto.Account;
 import com.example.golf_apk.dto.AccountResponse;
 import com.example.golf_apk.dto.PagedResponse;
 
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -32,4 +33,16 @@ public interface ApiService {
             @Query("page") int page,
             @Query("size") int size,
             @Query("sort") String sort);
+
+    @GET("api/field")
+    Call<ResponseBody> geFields(
+            @Query("searchTxt") String searchTxt,
+            @Query("page") int page,
+            @Query("size") int size);
+
+
+    @GET("api/warmup/create")
+    Call<ResponseBody> createPractice(
+            @Body RequestBody requestBody,
+            @Header("Authorization") String authorizationHeader);
 }

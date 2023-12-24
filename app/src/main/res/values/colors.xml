@@ -7,6 +7,6 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="dark_gray">#979696</color>
-    <color name="midl_gray">#D5D2D2</color>
+    <color name="dark_gray">#6F6B6B</color>
+    <color name="midl_gray">#9F9C9C</color>
 </resources>

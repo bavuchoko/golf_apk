@@ -22,11 +22,11 @@ import org.threeten.bp.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PracticeArrayAdapter extends ArrayAdapter<JsonObject> {
+public class PracticeAdapter extends ArrayAdapter<JsonObject> {
     private List<JsonObject> objectList;
     private LayoutInflater inflater;
 
-    public PracticeArrayAdapter(@NonNull Context context, @NonNull JsonArray jsonArray) {
+    public PracticeAdapter(@NonNull Context context, @NonNull JsonArray jsonArray) {
         super(context, 0);
         this.objectList = jsonArrayToList(jsonArray);
         inflater = LayoutInflater.from(context);
