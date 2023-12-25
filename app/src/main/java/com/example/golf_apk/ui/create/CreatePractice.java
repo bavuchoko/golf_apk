@@ -9,6 +9,7 @@ import android.view.animation.Animation;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -48,8 +49,14 @@ public class CreatePractice extends AppCompatActivity implements OnFieldClickLis
     private TextView btnCreate;
     private TextView btnFavorite;
     private EditText search;
-    private LinearLayout empty;
+
+    private ImageView deleteField;
+    private LinearLayout searchFieldLayout;
+    private LinearLayout selectedFieldLayout;
     private JsonArray fieldDtoList;
+    private boolean fieldSelected = false;
+    private String selectedFieldId;
+    private TextView selectedFieldName;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -61,6 +68,11 @@ public class CreatePractice extends AppCompatActivity implements OnFieldClickLis
         adapter = new FieldListAdapter(CreatePractice.this, fieldDtoList, this);
         btnCreate = findViewById(R.id.btn_practice_create);
         btnFavorite = findViewById(R.id.btn_field_favorite);
+        deleteField = findViewById(R.id.btn_delete_field);
+        selectedFieldLayout = findViewById(R.id.selected_field);
+        searchFieldLayout = findViewById(R.id.search_field_layout);
+        selectedFieldName = findViewById(R.id.selected_field_name);
+
 
         search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -78,6 +90,7 @@ public class CreatePractice extends AppCompatActivity implements OnFieldClickLis
 
         btnFavorite.setOnClickListener(favoriteFieldListener);
         btnCreate.setOnClickListener(createPracticeListener);
+        deleteField.setOnClickListener(deleteFieldListener);
     }
 
 
@@ -100,7 +113,6 @@ public class CreatePractice extends AppCompatActivity implements OnFieldClickLis
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
                     ResponseBody responseBody = response.body();
-                    empty = findViewById(R.id.list_noContent_create_practice);
                     // 리스트에 데이터를 추가하는 부분을 수정
                     try {
                         if (responseBody != null) {
@@ -115,13 +127,9 @@ public class CreatePractice extends AppCompatActivity implements OnFieldClickLis
                                     JsonElement warmupGameListElement = embeddedObject.get("fieldsDtoList");
                                     if (warmupGameListElement != null && warmupGameListElement.isJsonArray()) {
                                         fieldDtoList = warmupGameListElement.getAsJsonArray();
-                                        empty.setVisibility(View.INVISIBLE);
+
                                     }
-                                }else{
-                                    empty.setVisibility(View.VISIBLE);
                                 }
-                            }else{
-                                empty.setVisibility(View.VISIBLE);
                             }
                         }
                     } catch (IOException e) {
@@ -175,9 +183,29 @@ public class CreatePractice extends AppCompatActivity implements OnFieldClickLis
 
         // JSON 문자열을 RequestBody로 변환
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), json);
-
         if (accessToken != null) {
-//            call = api.createPractice(requestBody, accessToken);
+            call = api.createPractice(requestBody, accessToken);
+            call.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    if (response.isSuccessful()) {
+                        // response.body()를 사용하여 응답 데이터에 접근할 수 있음
+                        ResponseBody responseBody = response.body();
+                        // responseBody를 처리하는 로직 추가
+                    } else {
+                        // 요청이 실패한 경우
+                        // response.errorBody()를 사용하여 에러 응답에 접근할 수 있음
+                        ResponseBody errorBody = response.errorBody();
+                        // errorBody를 처리하는 로직 추가
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    // 네트워크 요청 실패 또는 응답을 받지 못한 경우
+                    // t에는 실패의 이유에 대한 정보가 포함되어 있음
+                }
+            });
         } else {
             // 알림창을 띄웁니다.
             AlertDialog.Builder builder = new AlertDialog.Builder(CreatePractice.this);
@@ -191,16 +219,31 @@ public class CreatePractice extends AppCompatActivity implements OnFieldClickLis
                     })
                     .setNegativeButton("취소", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
-                            // 취소 버튼을 누를 때 call을 취소하고 액티비티를 닫는 코드
-//                            if (call != null && !call.isCanceled()) {
-//                                call.cancel();
-//                            }
+                            // 취소 버튼을 누를 때 액티비티를 닫는 코드
                             closeThisActivityListener.onClick(null);
                         }
                     });
             builder.create().show();
         }
     }
+
+    private final View.OnClickListener deleteFieldListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            deleteField();
+        }
+    };
+
+    private void deleteField() {
+        fieldSelected = false;
+        selectedFieldId = null;
+        selectedFieldLayout.setVisibility(View.GONE);
+        selectedFieldName.setText("");
+        listView.setVisibility(View.VISIBLE);
+        searchFieldLayout.setVisibility(View.VISIBLE);
+        btnFavorite.setVisibility(View.VISIBLE);
+    }
+
     private final View.OnClickListener favoriteFieldListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
@@ -213,7 +256,13 @@ public class CreatePractice extends AppCompatActivity implements OnFieldClickLis
         overridePendingTransition(R.anim.not_move, R.anim.center_to_up);
     }
     @Override
-    public void onFieldClick(String fieldId) {
-        System.out.println(fieldId);
+    public void onFieldClick(String fieldId, String fieldName) {
+            fieldSelected = true;
+            selectedFieldId = fieldId;
+            selectedFieldLayout.setVisibility(View.VISIBLE);
+            selectedFieldName.setText(fieldName);
+            listView.setVisibility(View.GONE);
+            searchFieldLayout.setVisibility(View.GONE);
+            btnFavorite.setVisibility(View.GONE);
     }
 }

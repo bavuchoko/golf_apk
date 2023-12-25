@@ -2,7 +2,6 @@ package com.example.golf_apk.api;
 
 import com.example.golf_apk.dto.Account;
 import com.example.golf_apk.dto.AccountResponse;
-import com.example.golf_apk.dto.PagedResponse;
 
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;

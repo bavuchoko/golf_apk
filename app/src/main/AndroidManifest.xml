@@ -14,8 +14,6 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
 
-
-
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -52,6 +50,7 @@
 
         <activity
             android:name=".ui.LoginActivity"
+            android:windowSoftInputMode="adjustPan"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -63,6 +62,7 @@
 
         <activity
             android:name=".ui.create.CreateField"
+            android:windowSoftInputMode="adjustPan"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -73,6 +73,7 @@
 
         <activity
             android:name=".ui.create.CreatePractice"
+            android:windowSoftInputMode="adjustPan"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

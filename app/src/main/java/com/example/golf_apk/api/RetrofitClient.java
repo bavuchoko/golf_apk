@@ -10,8 +10,8 @@ public class RetrofitClient {
         public static Retrofit getRetrofit(){
             if(retrofit==null){
                 Retrofit.Builder builder = new Retrofit.Builder();
-//                builder.baseUrl("https://sejong-parkgolf.com:18090/");
-                builder.baseUrl("http://192.168.1.100:8090/");
+                builder.baseUrl("https://sejong-parkgolf.com:18090/");
+//                builder.baseUrl("http://192.168.1.100:8090/");
                 builder.addConverterFactory(GsonConverterFactory.create());
 
                 retrofit = builder.build();

@@ -144,6 +144,7 @@ public class LoginActivity extends AppCompatActivity {
                                 }
                                 AccountResponse authenticationResponse = response.body();
                                 CommonMethod.saveAccessToken(LoginActivity.this,  authenticationResponse.getAccessToken());
+                                CommonMethod.saveInfotoStorage(LoginActivity.this, KeyType.ID.getValue(), authenticationResponse.getId());
                                 CommonMethod.saveInfotoStorage(LoginActivity.this, KeyType.NAME.getValue(), authenticationResponse.getName());
                                 CommonMethod.saveInfotoStorage(LoginActivity.this, KeyType.BIRTH.getValue(), authenticationResponse.getBirth());
                                 CommonMethod.saveInfotoStorage(LoginActivity.this, KeyType.JOIN_DATE.getValue(), authenticationResponse.getJoinDate());

@@ -3,6 +3,7 @@ package com.example.golf_apk.common;
 public enum KeyType {
     ACCESS_TOKEN("accessToken"),
     REFRESH_TOKEN("refreshToken"),
+    ID("id"),
     NAME("name"),
     JOIN_DATE("joinDate"),
     BIRTH("birth"),

@@ -20,7 +20,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
-                android:textSize="19sp"
+                android:textSize="@dimen/activity_title"
                 android:fontFamily="@font/applesdgothicneo_bold"
                 android:layout_marginTop="4dp"
                 android:text="새로운 경기를 시작합니다"/>
@@ -34,33 +34,69 @@
                 android:background="@color/white"
                 />
         </RelativeLayout>
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginVertical="10dp">
-
-<!--           검색창-->
-            <EditText
-                android:id="@+id/field_search"
+            android:orientation="vertical">
+            <LinearLayout
+                android:id="@+id/search_field_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="검색어를 입력하세요"
-                android:inputType="text"
-                android:imeOptions="actionSearch"
-                android:drawableRight="@drawable/baseline_search_24"/>
-
+                android:orientation="horizontal"
+                android:layout_marginVertical="10dp">
+    <!--           검색창-->
+                <EditText
+                    android:id="@+id/field_search"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="경기장 또는 지역명으로 검색"
+                    android:inputType="text"
+                    android:imeOptions="actionSearch"
+                    android:drawableRight="@drawable/baseline_search_24"/>
+            </LinearLayout>
 
         </LinearLayout>
 
-        <RelativeLayout
-            android:layout_width="250dp"
-            android:layout_height="30dp"
-            android:orientation="horizontal"
-            android:layout_gravity="center"
-            android:layout_marginBottom="@dimen/common_margin"
-            >
+        <LinearLayout
+            android:id="@+id/selected_field"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:visibility="gone"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/content_menu_large_size"
+                android:fontFamily="@font/applesdgothicnneo_regular"
+                android:layout_marginRight="5dp"
+                android:text="경기장 : "/>
+            <TextView
+                android:id="@+id/selected_field_name"
+                android:layout_width="wrap_content"
+                android:textSize="@dimen/content_menu_large_size"
+                android:fontFamily="@font/applesdgothicnneo_regular"
+                android:layout_marginRight="10dp"
+                android:text=""
+                android:layout_height="wrap_content"/>
+
+            <ImageView
+                android:id="@+id/btn_delete_field"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/baseline_close_24"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/btn_field_favorite"
@@ -68,74 +104,75 @@
                 android:layout_height="match_parent"
                 android:textSize="@dimen/content_menu_normal_size"
                 android:paddingVertical="5dp"
+                android:layout_marginRight="15dp"
+                android:gravity="center"
                 android:textColor="@color/black"
                 android:fontFamily="@font/applesdgothicneo_extra_bold"
-                android:paddingHorizontal="10dp"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentBottom="true"
                 android:text="즐겨찾기"/>
-
             <TextView
                 android:id="@+id/btn_practice_create"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:textSize="@dimen/content_menu_normal_size"
                 android:paddingVertical="5dp"
+                android:gravity="center"
                 android:textColor="@color/black"
                 android:fontFamily="@font/applesdgothicneo_extra_bold"
-                android:paddingHorizontal="10dp"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentBottom="true"
                 android:text="시작하기"/>
+        </LinearLayout>
 
-        </RelativeLayout>
 
 
-        <RelativeLayout
+
+
+        <ListView
+            android:id="@+id/list_practice_create_field"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginBottom="20dp"/>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:weightSum="2"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal">
 
-            <LinearLayout
-                android:id="@+id/list_noContent_create_practice"
-                android:layout_width="match_parent"
-                android:visibility="invisible"
-                android:orientation="vertical"
-                android:layout_height="wrap_content">
+            <EditText
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_marginRight="10dp"
+                android:inputType="textShortMessage"
+                android:layout_height="wrap_content"/>
 
 
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/empty"/>
+            <EditText
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:inputType="textShortMessage"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="2"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:textSize="18sp"
-                    android:textColor="#BA1E1E"
-                    android:layout_marginTop="30dp"
-                    android:fontFamily="@font/applesdgothicneo_bold"
-                    android:text="저런.....데이터가 없습니다"/>
-            </LinearLayout>
-
-            <ListView
-                android:id="@+id/list_practice_create_field"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-        </RelativeLayout>
+            <EditText
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_marginRight="10dp"
+                android:inputType="textShortMessage"
+                android:layout_height="wrap_content"/>
+            <EditText
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:inputType="textShortMessage"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
 
 
     </LinearLayout>
-
-
-
-
-
 </LinearLayout>
