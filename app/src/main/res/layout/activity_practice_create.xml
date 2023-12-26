@@ -140,6 +140,7 @@
             android:orientation="horizontal">
 
             <EditText
+                android:id="@+id/add_player_1"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_marginRight="10dp"
@@ -148,6 +149,7 @@
 
 
             <EditText
+                android:id="@+id/add_player_2"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:inputType="textShortMessage"
@@ -161,12 +163,14 @@
             android:orientation="horizontal">
 
             <EditText
+                android:id="@+id/add_player_3"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_marginRight="10dp"
                 android:inputType="textShortMessage"
                 android:layout_height="wrap_content"/>
             <EditText
+                android:id="@+id/add_player_4"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:inputType="textShortMessage"

@@ -1,6 +1,6 @@
 package com.example.golf_apk.dto;
 
-public class Field {
+public class Fields {
 
     private int id;
     private String name;

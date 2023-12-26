@@ -3,6 +3,7 @@ package com.example.golf_apk.ui.create;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.animation.Animation;
@@ -21,6 +22,8 @@ import com.example.golf_apk.R;
 import com.example.golf_apk.api.ApiService;
 import com.example.golf_apk.api.RetrofitClient;
 import com.example.golf_apk.common.CommonMethod;
+import com.example.golf_apk.dto.Fields;
+import com.example.golf_apk.dto.Practice;
 import com.example.golf_apk.dto.adapter.FieldListAdapter;
 import com.example.golf_apk.dto.adapter.service.OnFieldClickListener;
 import com.example.golf_apk.ui.LoginActivity;
@@ -31,6 +34,8 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -49,6 +54,10 @@ public class CreatePractice extends AppCompatActivity implements OnFieldClickLis
     private TextView btnCreate;
     private TextView btnFavorite;
     private EditText search;
+    private EditText player1;
+    private EditText player2;
+    private EditText player3;
+    private EditText player4;
 
     private ImageView deleteField;
     private LinearLayout searchFieldLayout;
@@ -72,6 +81,10 @@ public class CreatePractice extends AppCompatActivity implements OnFieldClickLis
         selectedFieldLayout = findViewById(R.id.selected_field);
         searchFieldLayout = findViewById(R.id.search_field_layout);
         selectedFieldName = findViewById(R.id.selected_field_name);
+        player1 = findViewById(R.id.add_player_1);
+        player2 = findViewById(R.id.add_player_2);
+        player3 = findViewById(R.id.add_player_3);
+        player4 = findViewById(R.id.add_player_4);
 
 
         search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -178,17 +191,30 @@ public class CreatePractice extends AppCompatActivity implements OnFieldClickLis
         Call<ResponseBody> call;
         api = RetrofitClient.getRetrofit().create(ApiService.class);
 
-        Gson gson = new Gson();
-        String json = gson.toJson("dataModel");
+        Practice game = new Practice();
+        Fields field = new Fields();
+        field.setId(Integer.parseInt(selectedFieldId));
+        game.setField(field);
 
+        List<String> playerNames = new ArrayList<>();
+
+        addToNonEmptyStrings(player1, playerNames);
+        addToNonEmptyStrings(player2, playerNames);
+        addToNonEmptyStrings(player3, playerNames);
+        addToNonEmptyStrings(player4, playerNames);
+        String[] PlayerNamesArray = playerNames.toArray(new String[playerNames.size()]);
+        game.setNames(PlayerNamesArray);
+        Gson gson = new Gson();
+        String jsonGame = gson.toJson(game);
         // JSON 문자열을 RequestBody로 변환
-        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), json);
+        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"),jsonGame);
         if (accessToken != null) {
-            call = api.createPractice(requestBody, accessToken);
+            call = api.createPractice(requestBody,"Bearer " + accessToken);
             call.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                     if (response.isSuccessful()) {
+                        String a ="";
                         // response.body()를 사용하여 응답 데이터에 접근할 수 있음
                         ResponseBody responseBody = response.body();
                         // responseBody를 처리하는 로직 추가
@@ -202,6 +228,7 @@ public class CreatePractice extends AppCompatActivity implements OnFieldClickLis
 
                 @Override
                 public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    String a ="";
                     // 네트워크 요청 실패 또는 응답을 받지 못한 경우
                     // t에는 실패의 이유에 대한 정보가 포함되어 있음
                 }
@@ -224,6 +251,16 @@ public class CreatePractice extends AppCompatActivity implements OnFieldClickLis
                         }
                     });
             builder.create().show();
+        }
+    }
+
+
+    private void addToNonEmptyStrings(EditText editText, List<String> nonEmptyStrings) {
+        if (editText != null && editText.getText() != null) {
+            String userInput = editText.getText().toString().trim();
+            if (!TextUtils.isEmpty(userInput)) {
+                nonEmptyStrings.add(userInput);
+            }
         }
     }
 

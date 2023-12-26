@@ -40,7 +40,7 @@ public interface ApiService {
             @Query("size") int size);
 
 
-    @GET("api/warmup/create")
+    @POST("api/warmup/create")
     Call<ResponseBody> createPractice(
             @Body RequestBody requestBody,
             @Header("Authorization") String authorizationHeader);
