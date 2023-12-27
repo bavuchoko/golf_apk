@@ -28,6 +28,7 @@ public class MatchActivity extends AppCompatActivity {
         }
     };
     private void closeMatchActivity() {
+
         finish();
     }
 }

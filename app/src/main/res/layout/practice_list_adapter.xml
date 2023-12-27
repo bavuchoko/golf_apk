@@ -97,7 +97,7 @@
                         android:gravity="center"
                         android:fontFamily="@font/applesdgothicneo_extra_bold"
                         android:textColor="@color/white"
-                        android:background="@color/midl_gray"
+                        android:background="@drawable/emptyuser"
                         android:text="+"/>
                     <TextView
                         android:id="@+id/btn_join_player2"
@@ -108,7 +108,7 @@
                         android:gravity="center"
                         android:fontFamily="@font/applesdgothicneo_extra_bold"
                         android:textColor="@color/white"
-                        android:background="@color/midl_gray"
+                        android:background="@drawable/emptyuser"
                         android:text="+"/>
                     <TextView
                         android:id="@+id/btn_join_player3"
@@ -119,7 +119,7 @@
                         android:gravity="center"
                         android:fontFamily="@font/applesdgothicneo_extra_bold"
                         android:textColor="@color/white"
-                        android:background="@color/midl_gray"
+                        android:background="@drawable/emptyuser"
                         android:text="+"/>
                     <TextView
                         android:id="@+id/btn_join_player4"
@@ -130,7 +130,7 @@
                         android:gravity="center"
                         android:fontFamily="@font/applesdgothicneo_extra_bold"
                         android:textColor="@color/white"
-                        android:background="@color/midl_gray"
+                        android:background="@drawable/emptyuser"
                         android:text="+"/>
 
                 </LinearLayout>

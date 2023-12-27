@@ -49,13 +49,14 @@ public class PracticeListActivity extends AppCompatActivity {
     private LinearLayout empty;
     private PracticeAdapter adapter;
     private  JsonArray warmupGameDtoList;
+    ImageButton closeButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_practice);
 
 
-        ImageButton closeButton = findViewById(R.id.btn_close_practice);
+        closeButton = findViewById(R.id.btn_close_practice);
         closeButton.setOnClickListener(closeThisActivityListener);
         CommonMethod.showLoading(PracticeListActivity.this);
 
@@ -122,6 +123,7 @@ public class PracticeListActivity extends AppCompatActivity {
         }
     };
     private void closethisActivity() {
+        closeButton.setBackgroundResource(R.drawable.btn_clicked_gray);
         finish();
         overridePendingTransition(R.anim.not_move, R.anim.center_to_up);
     }

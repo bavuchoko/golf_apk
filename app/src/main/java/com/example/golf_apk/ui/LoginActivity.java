@@ -36,6 +36,7 @@ public class LoginActivity extends AppCompatActivity {
     boolean constraint =false;
     EditText username;
     EditText password;
+    ImageButton closeButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,8 +47,8 @@ public class LoginActivity extends AppCompatActivity {
         Button loginBtn = findViewById(R.id.btn_login);
 
 
-        ImageButton closeButton = findViewById(R.id.btn_close_login);
 
+        closeButton = findViewById(R.id.btn_close_login);
         closeButton.setOnClickListener(closeThisActivityListener);
 
 
@@ -190,6 +191,7 @@ public class LoginActivity extends AppCompatActivity {
     };
 
     private void closethisActivity() {
+        closeButton.setBackgroundResource(R.drawable.btn_clicked_gray);
         finish();
         overridePendingTransition(R.anim.not_move, R.anim.center_to_up);
     }

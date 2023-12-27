@@ -66,11 +66,12 @@ public class CreatePractice extends AppCompatActivity implements OnFieldClickLis
     private boolean fieldSelected = false;
     private String selectedFieldId;
     private TextView selectedFieldName;
+    ImageButton closeButton;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_practice_create);
-        ImageButton closeButton = findViewById(R.id.btn_close_practice_create);
+        closeButton = findViewById(R.id.btn_close_practice_create);
         closeButton.setOnClickListener(closeThisActivityListener);
         search = findViewById(R.id.field_search);
         listView = findViewById(R.id.list_practice_create_field);
@@ -176,6 +177,7 @@ public class CreatePractice extends AppCompatActivity implements OnFieldClickLis
     };
 
     private void closethisActivity() {
+        closeButton.setBackgroundResource(R.drawable.btn_clicked_gray);
         finish();
         overridePendingTransition(R.anim.not_move, R.anim.center_to_up);
     }

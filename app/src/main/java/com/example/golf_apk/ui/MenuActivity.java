@@ -45,12 +45,13 @@ public class MenuActivity extends AppCompatActivity {
     TextView userName;
     TextView userAge;
     TextView logout;
+    ImageButton closeButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
-        
-        ImageButton closeButton = findViewById(R.id.btn_close_menu);
+
+        closeButton = findViewById(R.id.btn_close_menu);
         TextView loginButton = findViewById(R.id.login_btn);
         beforeLogin = findViewById(R.id.before_login);
         afterLogin = findViewById(R.id.after_login);
@@ -167,6 +168,7 @@ public class MenuActivity extends AppCompatActivity {
     };
 
     private void closeMenuActivity() {
+        closeButton.setBackgroundResource(R.drawable.btn_clicked_gray);
         finish();
         overridePendingTransition(R.anim.not_move, R.anim.center_to_left);
     }

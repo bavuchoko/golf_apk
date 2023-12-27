@@ -1,13 +1,12 @@
 package com.example.golf_apk.dto.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.TableRow;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -57,6 +56,18 @@ public class PracticeAdapter extends ArrayAdapter<JsonObject> {
         TextView player2 =view.findViewById(R.id.btn_join_player2);
         TextView player3 =view.findViewById(R.id.btn_join_player3);
         TextView player4 =view.findViewById(R.id.btn_join_player4);
+        player1.setText("+");
+        player1.setBackgroundResource(R.drawable.emptyuser);
+        player1.setTextColor(Color.parseColor("#ffffff"));
+        player2.setText("+");
+        player2.setBackgroundResource(R.drawable.emptyuser);
+        player2.setTextColor(Color.parseColor("#ffffff"));
+        player3.setText("+");
+        player3.setBackgroundResource(R.drawable.emptyuser);
+        player3.setTextColor(Color.parseColor("#ffffff"));
+        player4.setText("+");
+        player4.setBackgroundResource(R.drawable.emptyuser);
+        player4.setTextColor(Color.parseColor("#ffffff"));
         players.add(player1);
         players.add(player2);
         players.add(player3);
@@ -106,13 +117,15 @@ public class PracticeAdapter extends ArrayAdapter<JsonObject> {
             //참가선수가 있으면
             if (playersElement != null && playersElement.isJsonArray()) {
                 playersArray = playersElement.getAsJsonArray();
-                for(int i =0; i<playersArray.size()-1; i++){
+
+                for(int i =0; i< playersArray.size(); i++){
                     String name = playersArray.get(i).getAsJsonObject().getAsJsonPrimitive("username").getAsString();
                     if(name.length()>3){
                         name = name.substring(name.length()-2,name.length());
                     }
                     players.get(i).setText(name);
-                    players.get(i).setBackgroundResource(R.drawable.btn_round_empty);
+                    players.get(i).setBackgroundResource(R.drawable.btn_player_occupied);
+                    players.get(i).setTextColor(Color.parseColor("#000000"));
                 }
 
             } else {  //아무도 참가하지 않았으면
