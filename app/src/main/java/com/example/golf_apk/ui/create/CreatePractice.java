@@ -27,11 +27,15 @@ import com.example.golf_apk.dto.Practice;
 import com.example.golf_apk.dto.adapter.FieldListAdapter;
 import com.example.golf_apk.dto.adapter.service.OnFieldClickListener;
 import com.example.golf_apk.ui.LoginActivity;
+import com.example.golf_apk.ui.update.UpdatePractice;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -216,13 +220,27 @@ public class CreatePractice extends AppCompatActivity implements OnFieldClickLis
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                     if (response.isSuccessful()) {
-                        String a ="";
-                        // response.body()를 사용하여 응답 데이터에 접근할 수 있음
                         ResponseBody responseBody = response.body();
-                        // responseBody를 처리하는 로직 추가
+                        try {
+                            // 응답 바디를 문자열로 변환
+                            String bodyString = responseBody.string();
+
+                            // JSON 파싱
+                            JSONObject jsonResponse = new JSONObject(bodyString);
+
+                            // ID 값을 추출
+                            String id = jsonResponse.optString("id");
+
+                            // ID 값을 사용하여 PracticeActivity로 이동
+                            Intent intent = new Intent(CreatePractice.this, UpdatePractice.class);
+                            intent.putExtra("id", id);
+                            startActivity(intent);
+                            overridePendingTransition(R.anim.center_to_up, R.anim.not_move);
+
+                        } catch (IOException | JSONException e) {
+                            e.printStackTrace();
+                        }
                     } else {
-                        // 요청이 실패한 경우
-                        // response.errorBody()를 사용하여 에러 응답에 접근할 수 있음
                         ResponseBody errorBody = response.errorBody();
                         // errorBody를 처리하는 로직 추가
                     }

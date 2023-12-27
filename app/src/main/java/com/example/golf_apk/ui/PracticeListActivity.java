@@ -1,6 +1,7 @@
 package com.example.golf_apk.ui;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -20,6 +21,9 @@ import com.example.golf_apk.api.RetrofitClient;
 import com.example.golf_apk.common.CommonMethod;
 import com.example.golf_apk.common.KeyType;
 import com.example.golf_apk.dto.adapter.PracticeAdapter;
+import com.example.golf_apk.dto.adapter.service.OnPracticeClickListener;
+import com.example.golf_apk.ui.create.CreatePractice;
+import com.example.golf_apk.ui.update.UpdatePractice;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -38,7 +42,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PracticeListActivity extends AppCompatActivity {
+public class PracticeListActivity extends AppCompatActivity implements OnPracticeClickListener {
     ApiService api;
     private Animation slideOut;
     private ListView listView;
@@ -64,7 +68,7 @@ public class PracticeListActivity extends AppCompatActivity {
         datePickerEndDate = findViewById(R.id.showEndDatePicker);
         listView = findViewById(R.id.list_practice);
 
-        adapter = new PracticeAdapter(PracticeListActivity.this, warmupGameDtoList);
+        adapter = new PracticeAdapter(PracticeListActivity.this, warmupGameDtoList, this);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy-MM-dd");
 
         LocalDate currentDate = LocalDate.now();
@@ -226,5 +230,14 @@ public class PracticeListActivity extends AppCompatActivity {
                 t.printStackTrace();
             }
         });
+    }
+
+
+    @Override
+    public void onPracticeClick(String id) {
+        Intent intent = new Intent(PracticeListActivity.this, UpdatePractice.class);
+        intent.putExtra("id", id);
+        startActivity(intent);
+        overridePendingTransition(R.anim.center_to_up, R.anim.not_move);
     }
 }

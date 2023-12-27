@@ -15,6 +15,7 @@ import androidx.annotation.Nullable;
 import com.example.golf_apk.R;
 import com.example.golf_apk.common.CommonMethod;
 import com.example.golf_apk.common.KeyType;
+import com.example.golf_apk.dto.adapter.service.OnPracticeClickListener;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -30,12 +31,14 @@ public class PracticeAdapter extends ArrayAdapter<JsonObject> {
     private List<JsonObject> objectList;
     private LayoutInflater inflater;
 
+    private OnPracticeClickListener onPracticeClickListener;
     private List<TextView> players;
 
-    public PracticeAdapter(@NonNull Context context, @NonNull JsonArray jsonArray) {
+    public PracticeAdapter(@NonNull Context context, @NonNull JsonArray jsonArray, OnPracticeClickListener listener) {
         super(context, 0);
         this.objectList = jsonArrayToList(jsonArray);
         inflater = LayoutInflater.from(context);
+        this.onPracticeClickListener = listener;
     }
 
     @NonNull
@@ -51,6 +54,8 @@ public class PracticeAdapter extends ArrayAdapter<JsonObject> {
         TextView filedName = view.findViewById(R.id.field_name);
         TextView filedAddress = view.findViewById(R.id.field_address);
         ImageView list_occupy = view.findViewById(R.id.list_occupy);
+
+
         players = new ArrayList<>();
         TextView player1 =view.findViewById(R.id.btn_join_player1);
         TextView player2 =view.findViewById(R.id.btn_join_player2);
@@ -76,6 +81,14 @@ public class PracticeAdapter extends ArrayAdapter<JsonObject> {
 
         JsonObject practiceObject = getItem(position);
         if (practiceObject != null) {
+            final String currentPracticeId = practiceObject.getAsJsonPrimitive("id").getAsString();
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    goToPracticeView(currentPracticeId);
+                }
+            });
+
             LocalDateTime dateTime = LocalDateTime.parse(practiceObject.getAsJsonPrimitive("playDate").getAsString(), DateTimeFormatter.ISO_LOCAL_DATE_TIME);
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm a");
             String formattedDateTime = dateTime.format(formatter);
@@ -166,6 +179,7 @@ public class PracticeAdapter extends ArrayAdapter<JsonObject> {
             playStatus.setText(statusText);
         }
 
+
         return view;
     }
 
@@ -185,5 +199,13 @@ public class PracticeAdapter extends ArrayAdapter<JsonObject> {
         clear();  // 기존 데이터를 비우고
         addAll(jsonArrayToList(newData));  // 새로운 데이터를 추가
         notifyDataSetChanged();
+    }
+
+
+
+    private void goToPracticeView(String id) {
+        if (onPracticeClickListener != null) {
+            onPracticeClickListener.onPracticeClick(id);
+        }
     }
 }
