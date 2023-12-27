@@ -31,7 +31,7 @@ public class PracticeAdapter extends ArrayAdapter<JsonObject> {
     private List<JsonObject> objectList;
     private LayoutInflater inflater;
 
-
+    private List<TextView> players;
 
     public PracticeAdapter(@NonNull Context context, @NonNull JsonArray jsonArray) {
         super(context, 0);
@@ -52,8 +52,15 @@ public class PracticeAdapter extends ArrayAdapter<JsonObject> {
         TextView filedName = view.findViewById(R.id.field_name);
         TextView filedAddress = view.findViewById(R.id.field_address);
         ImageView list_occupy = view.findViewById(R.id.list_occupy);
-        ImageButton btnJoin = view.findViewById(R.id.btn_join_practice);
-        TextView playerCnt = view.findViewById(R.id.text_player_cnt);
+        players = new ArrayList<>();
+        TextView player1 =view.findViewById(R.id.btn_join_player1);
+        TextView player2 =view.findViewById(R.id.btn_join_player2);
+        TextView player3 =view.findViewById(R.id.btn_join_player3);
+        TextView player4 =view.findViewById(R.id.btn_join_player4);
+        players.add(player1);
+        players.add(player2);
+        players.add(player3);
+        players.add(player4);
         boolean canJoin = false;
 
         JsonObject practiceObject = getItem(position);
@@ -82,7 +89,7 @@ public class PracticeAdapter extends ArrayAdapter<JsonObject> {
                 case "OPEN":
                     canJoin = true;
                     statusText = "OPEN";
-                    playStatus.setBackgroundResource(R.drawable.btn_green_whitestroke);
+                    playStatus.setBackgroundResource(R.drawable.btn_green_whitestroke);  //btn_round_empty
                     break;
                 case "END":
                     statusText = "END";
@@ -94,12 +101,22 @@ public class PracticeAdapter extends ArrayAdapter<JsonObject> {
             filedName.setText(!fieldElement.isJsonNull() ? fieldElement.getAsJsonObject().getAsJsonPrimitive("name").getAsString() : "경기장 미지정");
             filedAddress.setText(!fieldElement.isJsonNull() ? fieldElement.getAsJsonObject().getAsJsonPrimitive("address").getAsString() : "주소 미상");
 
+
             JsonElement playersElement = practiceObject.get("players");
+            //참가선수가 있으면
             if (playersElement != null && playersElement.isJsonArray()) {
                 playersArray = playersElement.getAsJsonArray();
-                playerCnt.setText(String.valueOf (playersArray.size()));
-            } else {
-                playerCnt.setText("0");
+                for(int i =0; i<playersArray.size()-1; i++){
+                    String name = playersArray.get(i).getAsJsonObject().getAsJsonPrimitive("username").getAsString();
+                    if(name.length()>3){
+                        name = name.substring(name.length()-2,name.length());
+                    }
+                    players.get(i).setText(name);
+                    players.get(i).setBackgroundResource(R.drawable.btn_round_empty);
+                }
+
+            } else {  //아무도 참가하지 않았으면
+
             }
 
 
@@ -128,11 +145,9 @@ public class PracticeAdapter extends ArrayAdapter<JsonObject> {
                     }
                 }
             }
-            if (canJoin) {
+            if (canJoin) {      //참가할 수 있는 상태
                 //참가버튼을 활성화 한다.
-                btnJoin.setVisibility(View.VISIBLE);
-            } else {
-                btnJoin.setVisibility(View.INVISIBLE);
+
             }
 
             playStatus.setText(statusText);

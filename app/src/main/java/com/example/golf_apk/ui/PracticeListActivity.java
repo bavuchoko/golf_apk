@@ -38,7 +38,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PracticeActivity extends AppCompatActivity {
+public class PracticeListActivity extends AppCompatActivity {
     ApiService api;
     private Animation slideOut;
     private ListView listView;
@@ -57,13 +57,13 @@ public class PracticeActivity extends AppCompatActivity {
 
         ImageButton closeButton = findViewById(R.id.btn_close_practice);
         closeButton.setOnClickListener(closeThisActivityListener);
-        CommonMethod.showLoading(PracticeActivity.this);
+        CommonMethod.showLoading(PracticeListActivity.this);
 
         datePickerStartDate = findViewById(R.id.showStartDatePicker);
         datePickerEndDate = findViewById(R.id.showEndDatePicker);
         listView = findViewById(R.id.list_practice);
 
-        adapter = new PracticeAdapter(PracticeActivity.this, warmupGameDtoList);
+        adapter = new PracticeAdapter(PracticeListActivity.this, warmupGameDtoList);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy-MM-dd");
 
         LocalDate currentDate = LocalDate.now();
@@ -145,7 +145,7 @@ public class PracticeActivity extends AppCompatActivity {
         int day = calendar.get(Calendar.DAY_OF_MONTH);
 
         DatePickerDialog datePickerDialog = new DatePickerDialog(
-                PracticeActivity.this, new DatePickerDialog.OnDateSetListener() {
+                PracticeListActivity.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int selectedYear, int monthOfYear, int dayOfMonth) {
                         String selectedDate = String.format(Locale.getDefault(), "%04d-%02d-%02d", selectedYear, monthOfYear + 1, dayOfMonth);
@@ -169,7 +169,7 @@ public class PracticeActivity extends AppCompatActivity {
         int page =0;
         int size=10;
         Call<ResponseBody> call;
-        String accessToken = CommonMethod.getAccessToken(PracticeActivity.this);
+        String accessToken = CommonMethod.getAccessToken(PracticeListActivity.this);
         if(accessToken !=null){
             call = api.getPractices(start, end, page, size,"playDate,desc", "Bearer " + accessToken);
         }else{

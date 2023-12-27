@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.golf_apk.ui.MatchActivity;
 import com.example.golf_apk.ui.MenuActivity;
-import com.example.golf_apk.ui.PracticeActivity;
+import com.example.golf_apk.ui.PracticeListActivity;
 import com.jakewharton.threetenabp.AndroidThreeTen;
 
 public class MainActivity extends AppCompatActivity {
@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.left_to_center, R.anim.not_move);
     }
     private void openPracticeActivity() {
-        Intent intent = new Intent(MainActivity.this, PracticeActivity.class);
+        Intent intent = new Intent(MainActivity.this, PracticeListActivity.class);
         startActivity(intent);
         overridePendingTransition(R.anim.up_to_center, R.anim.not_move);
     }
