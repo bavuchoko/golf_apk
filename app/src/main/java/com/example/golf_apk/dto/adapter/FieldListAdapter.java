@@ -38,7 +38,7 @@ public class FieldListAdapter extends ArrayAdapter<JsonObject> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View view = convertView;
         if (view == null) {
-            view = inflater.inflate(R.layout.field_list_adapter, parent, false);
+            view = inflater.inflate(R.layout.adapter_create_practice_fields, parent, false);
         }
 
         TextView fieldId = view.findViewById(R.id.field_id);

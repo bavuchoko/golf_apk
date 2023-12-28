@@ -46,7 +46,7 @@ public class PracticeAdapter extends ArrayAdapter<JsonObject> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View view = convertView;
         if (view == null) {
-            view = inflater.inflate(R.layout.practice_list_adapter, parent, false);
+            view = inflater.inflate(R.layout.adapter_practices, parent, false);
         }
         String accessToken = CommonMethod.getAccessToken(PracticeAdapter.this.getContext());
         TextView playDate = view.findViewById(R.id.play_date);
@@ -132,7 +132,7 @@ public class PracticeAdapter extends ArrayAdapter<JsonObject> {
                 playersArray = playersElement.getAsJsonArray();
 
                 for(int i =0; i< playersArray.size(); i++){
-                    String name = playersArray.get(i).getAsJsonObject().getAsJsonPrimitive("username").getAsString();
+                    String name = playersArray.get(i).getAsJsonObject().getAsJsonPrimitive(KeyType.NAME.getValue()).getAsString();
                     if(name.length()>3){
                         name = name.substring(name.length()-2,name.length());
                     }

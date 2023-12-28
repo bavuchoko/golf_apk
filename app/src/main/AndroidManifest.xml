@@ -83,7 +83,7 @@
         </activity>
 
         <activity
-            android:name=".ui.update.UpdatePractice"
+            android:name=".ui.vu.ViewPractice"
             android:windowSoftInputMode="adjustPan"
             android:exported="true">
             <intent-filter>

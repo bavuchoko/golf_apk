@@ -21,8 +21,7 @@ import com.example.golf_apk.ui.create.CreateField;
 import com.example.golf_apk.ui.create.CreateMatch;
 import com.example.golf_apk.ui.create.CreatePractice;
 import com.example.golf_apk.dto.adapter.ExpandableListAdapter;
-import com.example.golf_apk.ui.update.UpdatePractice;
-import com.jakewharton.threetenabp.AndroidThreeTen;
+import com.example.golf_apk.ui.vu.ViewPractice;
 
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.Period;
@@ -125,7 +124,7 @@ public class MenuActivity extends AppCompatActivity {
                 ExpandableMenuItem clickedItem = expandableListAdapter.getMenuDataList().get(listDataHeader.get(groupPosition)).get(childPosition);
 
                 // view 페이지로 이동
-                Intent intent = new Intent(MenuActivity.this, UpdatePractice.class);
+                Intent intent = new Intent(MenuActivity.this, ViewPractice.class);
                 intent.putExtra("id", clickedItem.getId());
                 startActivity(intent);
                 

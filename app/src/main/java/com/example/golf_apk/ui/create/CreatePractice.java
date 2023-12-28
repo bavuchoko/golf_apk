@@ -27,7 +27,7 @@ import com.example.golf_apk.dto.Practice;
 import com.example.golf_apk.dto.adapter.FieldListAdapter;
 import com.example.golf_apk.dto.adapter.service.OnFieldClickListener;
 import com.example.golf_apk.ui.LoginActivity;
-import com.example.golf_apk.ui.update.UpdatePractice;
+import com.example.golf_apk.ui.vu.ViewPractice;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -74,7 +74,7 @@ public class CreatePractice extends AppCompatActivity implements OnFieldClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_practice_create);
+        setContentView(R.layout.create_practice);
         closeButton = findViewById(R.id.btn_close_practice_create);
         closeButton.setOnClickListener(closeThisActivityListener);
         search = findViewById(R.id.field_search);
@@ -232,7 +232,7 @@ public class CreatePractice extends AppCompatActivity implements OnFieldClickLis
                             String id = jsonResponse.optString("id");
 
                             // ID 값을 사용하여 PracticeActivity로 이동
-                            Intent intent = new Intent(CreatePractice.this, UpdatePractice.class);
+                            Intent intent = new Intent(CreatePractice.this, ViewPractice.class);
                             intent.putExtra("id", id);
                             startActivity(intent);
                             overridePendingTransition(R.anim.center_to_up, R.anim.not_move);

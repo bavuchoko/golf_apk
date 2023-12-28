@@ -22,8 +22,7 @@ import com.example.golf_apk.common.CommonMethod;
 import com.example.golf_apk.common.KeyType;
 import com.example.golf_apk.dto.adapter.PracticeAdapter;
 import com.example.golf_apk.dto.adapter.service.OnPracticeClickListener;
-import com.example.golf_apk.ui.create.CreatePractice;
-import com.example.golf_apk.ui.update.UpdatePractice;
+import com.example.golf_apk.ui.vu.ViewPractice;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -57,7 +56,7 @@ public class PracticeListActivity extends AppCompatActivity implements OnPractic
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_practice);
+        setContentView(R.layout.list_practice);
 
 
         closeButton = findViewById(R.id.btn_close_practice);
@@ -235,7 +234,7 @@ public class PracticeListActivity extends AppCompatActivity implements OnPractic
 
     @Override
     public void onPracticeClick(String id) {
-        Intent intent = new Intent(PracticeListActivity.this, UpdatePractice.class);
+        Intent intent = new Intent(PracticeListActivity.this, ViewPractice.class);
         intent.putExtra("id", id);
         startActivity(intent);
         overridePendingTransition(R.anim.center_to_up, R.anim.not_move);
