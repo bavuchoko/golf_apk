@@ -6,22 +6,23 @@
     android:background="@drawable/btn_player_select"
     android:layout_marginLeft="5dp"
     android:layout_marginRight="5dp"
-    android:padding="6dp"
+    android:padding="3dp"
     android:orientation="vertical">
 
     <TextView
         android:id="@+id/player_family_name"
-        android:layout_width="70dp"
-        android:layout_height="45dp"
+        android:layout_width="50dp"
+        android:layout_height="33dp"
         android:gravity="center"
-        android:textSize="40sp"
+        android:textSize="28sp"
+        android:fontFamily="@font/applesdgothicneo_extra_bold"
         android:text="성"/>
     <TextView
         android:id="@+id/player_name"
-        android:layout_width="70dp"
-        android:layout_height="30dp"
+        android:layout_width="50dp"
+        android:layout_height="17dp"
         android:gravity="center"
-        android:textSize="20sp"
+        android:textSize="15sp"
         android:text="이름"/>
 
 </LinearLayout>

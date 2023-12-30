@@ -133,7 +133,7 @@ public class PracticeAdapter extends ArrayAdapter<JsonObject> {
 
                 for(int i =0; i< playersArray.size(); i++){
                     String name = playersArray.get(i).getAsJsonObject().getAsJsonPrimitive(KeyType.NAME.getValue()).getAsString();
-                    if(name.length()>3){
+                    if(name.length()>=3){
                         name = name.substring(name.length()-2,name.length());
                     }
                     players.get(i).setText(name);

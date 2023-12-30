@@ -225,8 +225,9 @@ public class PracticeListActivity extends AppCompatActivity implements OnPractic
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                // 네트워크 오류 등에 대한 처리
                 t.printStackTrace();
+                CommonMethod.hideLoading();
+                CommonMethod.showAlert(PracticeListActivity.this, "서비스 장애가 발생하였습니다.");
             }
         });
     }

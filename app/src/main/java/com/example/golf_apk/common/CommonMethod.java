@@ -35,6 +35,8 @@ public class CommonMethod {
         }
     }
 
+
+
     // 로딩 숨기기
     public static void hideLoading() {
         if (progressDialog != null && progressDialog.isShowing()) {

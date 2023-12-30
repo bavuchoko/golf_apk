@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -40,6 +42,11 @@ public class ViewPractice extends AppCompatActivity {
     private JsonArray players;
 
     private RecyclerView playersView;
+    private ImageButton scoreUp;
+    private ImageButton scoreDown;
+
+    private TextView btnSave;
+    private TextView btnNext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,14 +55,67 @@ public class ViewPractice extends AppCompatActivity {
 
         ImageButton closeButton = findViewById(R.id.btn_close_practice_view);
         closeButton.setOnClickListener(closeThisActivityListener);
+
+        //참가자들
         playersView = findViewById(R.id.practice_view_players);
         playersView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
+
+        //점수조정 버튼
+        scoreUp = findViewById(R.id.score_up);
+        scoreDown = findViewById(R.id.score_down);
+
+        scoreUp.setOnClickListener(scoreUpClickListener);
+        scoreDown.setOnClickListener(scoreDownClickListener);
+
+        //다음 홀 버튼, 저장 버튼
+        btnSave = findViewById(R.id.btn_save_score);
+        btnNext = findViewById(R.id.btn_next_hole);
+
+        scoreUp.setOnClickListener(saveScoreClickListener);
+        scoreDown.setOnClickListener(nextHoleClickListener);
+
         Intent intent = getIntent();
         String practiceId = intent.getStringExtra("id");
-
         getPractice(practiceId);
 
     }
+
+    private final View.OnClickListener scoreUpClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Animation clickAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.button_click_animation);
+            view.startAnimation(clickAnimation);
+            System.out.println("up");
+        }
+    };
+
+    private final View.OnClickListener scoreDownClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Animation clickAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.button_click_animation);
+            view.startAnimation(clickAnimation);
+            System.out.println("down");
+        }
+    };
+
+
+    private final View.OnClickListener saveScoreClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Animation clickAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.button_click_animation);
+            view.startAnimation(clickAnimation);
+            System.out.println("save");
+        }
+    };
+
+    private final View.OnClickListener nextHoleClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Animation clickAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.button_click_animation);
+            view.startAnimation(clickAnimation);
+            System.out.println("next");
+        }
+    };
 
     private void getPractice(String practiceId) {
         api = RetrofitClient.getRetrofit().create(ApiService.class);
