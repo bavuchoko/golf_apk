@@ -16,7 +16,7 @@ public class RetrofitClient {
                 Retrofit.Builder builder = new Retrofit.Builder();
                 builder.baseUrl("https://sejong-parkgolf.com:18090/");
 //                builder.baseUrl("http://192.168.1.100:8090/");
-                builder.client(client);
+//                builder.client(client);
                 builder.addConverterFactory(GsonConverterFactory.create());
 
                 retrofit = builder.build();
