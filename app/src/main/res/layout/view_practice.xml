@@ -43,7 +43,7 @@
         <include
             android:id="@+id/player_score_setter"
             layout="@layout/view_practice_comp_score"
-            android:visibility="gone"
+            android:visibility="visible"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
