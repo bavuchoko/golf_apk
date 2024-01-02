@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.golf_apk.R;
 import com.example.golf_apk.api.ApiService;
 import com.example.golf_apk.api.RetrofitClient;
+import com.example.golf_apk.api.SSEService;
 import com.example.golf_apk.common.CommonMethod;
 import com.example.golf_apk.databinding.ViewPracticeBinding;
 import com.example.golf_apk.dto.adapter.PracticePlayerAdapter;
@@ -41,6 +42,7 @@ public class ViewPractice extends AppCompatActivity {
     private PracticePlayerAdapter practicePlayerAdapter;
 
     private JsonArray players;
+    private SSEService sseService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,9 +63,25 @@ public class ViewPractice extends AppCompatActivity {
         binding.playerScoreSetter.btnSaveScore.setOnClickListener(saveScoreClickListener);
         binding.playerScoreSetter.btnNextHole.setOnClickListener(nextHoleClickListener);
 
+        //조회할 경기 아이디를 받아서 경기 조회
         Intent intent = getIntent();
         String practiceId = intent.getStringExtra("id");
-        getPractice(practiceId);
+        sseService = new SSEService(api);
+        sseService.connectToSSE(practiceId);
+
+        // LiveData 관찰
+        sseService.getEventLiveData().observe(this, eventData -> {
+            // UI 갱신 로직 구현
+            setPractice(eventData);
+        });
+
+        sseService.getFailureLiveData().observe(this, throwable -> {
+            // 실패 처리 로직
+            throwable.printStackTrace();
+        });
+
+        // 실제 사용할 ID를 전달
+        sseService.connectToSSE("your_id");
 
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container_score, new FragmentViewPracticeCurrent())
@@ -110,43 +128,14 @@ public class ViewPractice extends AppCompatActivity {
         }
     };
 
-    private void getPractice(String practiceId) {
-        api = RetrofitClient.getRetrofit().create(ApiService.class);
-        Call<ResponseBody> call;
-        String accessToken = CommonMethod.getAccessToken(ViewPractice.this);
-        if (accessToken != null) {
-            call = api.getPractice(practiceId, "Bearer " + accessToken);
-        } else {
-            call = api.getPractice(practiceId);
+    private void setPractice(String jsonString) {
+        practice = JsonParser.parseString(jsonString).getAsJsonObject();
+        JsonElement playersElement = practice.get("players");
+        if (playersElement != null && playersElement.isJsonArray()) {
+            players = practice.getAsJsonArray("players");
+            practicePlayerAdapter = new PracticePlayerAdapter(players);
+            binding.practiceViewPlayers.setAdapter(practicePlayerAdapter);
         }
-        call.enqueue(new Callback<ResponseBody>() {
-
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                ResponseBody responseBody = response.body();
-                try {
-                    if (responseBody != null) {
-                        String jsonString = responseBody.string();
-                        practice = JsonParser.parseString(jsonString).getAsJsonObject();
-                        JsonElement playersElement = practice.get("players");
-                        if (playersElement != null && playersElement.isJsonArray()) {
-                            players = practice.getAsJsonArray("players");
-                            practicePlayerAdapter = new PracticePlayerAdapter(players);
-                            binding.practiceViewPlayers.setAdapter(practicePlayerAdapter);
-                        }
-                    }
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-            }
-        });
-
     }
 
     private final View.OnClickListener closeThisActivityListener = new View.OnClickListener() {
